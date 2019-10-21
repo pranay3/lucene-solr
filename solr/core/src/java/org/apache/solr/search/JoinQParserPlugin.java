@@ -117,6 +117,10 @@ public class JoinQParserPlugin extends QParserPlugin {
           fromQuery = fromQueryParser.getQuery();
         }
 
+        if(fromField == null || toField == null || fromQuery == null)
+          throw new SolrException(SolrException.ErrorCode.BAD_REQUEST,
+              "Some of the mandatory params are missing in the query.");
+
         JoinQuery jq = new JoinQuery(fromField, toField, coreName == null ? fromIndex : coreName, fromQuery);
         jq.fromCoreOpenTime = fromCoreOpenTime;
         return jq;
